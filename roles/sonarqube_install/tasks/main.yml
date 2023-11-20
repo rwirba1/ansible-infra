@@ -198,9 +198,9 @@
     rule: allow
     port: "{{ item }}"
   with_items:
-    - 80/tcp
-    - 9000/tcp
-    - 9001/tcp
+    - 80
+    - 9000
+    - 9001
 
 - name: Reboot system
   ansible.builtin.command: shutdown -r +1
