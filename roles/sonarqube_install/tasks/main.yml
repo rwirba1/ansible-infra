@@ -35,14 +35,20 @@
   ansible.builtin.command: java -version
   ignore_errors: yes
 
-- name: Download PostgreSQL GPG key
-  ansible.builtin.get_url:
-    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
-    dest: /tmp/postgresql-gpg-key.asc
+- name: Ensure gpg is installed
+  apt:
+    name: gpg
 
-- name: Add PostgreSQL GPG key
-  ansible.builtin.command: gpg --dearmor /tmp/postgresql-gpg-key.asc && mv /tmp/postgresql-gpg-key.asc.gpg /usr/share/keyrings/postgresql-archive-keyring.gpg
+#- name: Download PostgreSQL GPG key
+#  ansible.builtin.get_url:
+#    url: https://www.postgresql.org/media/keys/ACCC4CF8.asc
+#    dest: /tmp/postgresql-gpg-key.asc
 
+- name: Add repository signing key
+  apt_key:
+    url: "https://www.postgresql.org/media/keys/ACCC4CF8.asc"
+    state: present
+    
 - name: Add postgresql repository
   apt_repository:
     repo: "deb https://apt.postgresql.org/pub/repos/apt/ {{ ansible_distribution_release }}-pgdg main"
