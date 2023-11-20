@@ -119,6 +119,7 @@
 
 - name: Rename SonarQube directory
   ansible.builtin.command: mv /opt/sonarqube-8.3.0.34182/ /opt/sonarqube
+  ignore_errors: yes
 
 - name: Create SonarQube user and group
   ansible.builtin.group:
