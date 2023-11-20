@@ -71,14 +71,14 @@
 - name: Set PostgreSQL password
   ansible.builtin.command: echo "postgres:admin123" | chpasswd
 
-- name: Create PostgreSQL user
-  ansible.builtin.postgresql_user:
-    db: sonarqube
-    name: sonar
-    password: admin123
-    priv: ALL
-    role_attr_flags: CREATEDB,LOGIN
-    state: present
+#- name: Create PostgreSQL user
+#  ansible.builtin.postgresql_user:
+#    db: sonarqube
+#    name: sonar
+#    password: admin123
+#    priv: ALL
+#    role_attr_flags: CREATEDB,LOGIN
+#    state: present
 
 - name: Configure PostgreSQL database
   ansible.builtin.postgresql_db:
