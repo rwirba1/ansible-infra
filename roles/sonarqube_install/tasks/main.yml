@@ -143,6 +143,7 @@
   ansible.builtin.copy:
     src: /opt/sonarqube/conf/sonar.properties
     dest: /root/sonar.properties_backup
+    remote_src: yes
 
 - name: Configure sonar.properties
   ansible.builtin.template:
