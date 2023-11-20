@@ -80,6 +80,11 @@
 #    role_attr_flags: CREATEDB,LOGIN
 #    state: present
 
+- name: Install psycopg2
+  ansible.builtin.apt:
+    name: python3-psycopg2
+    state: present
+    
 - name: Configure PostgreSQL database
   ansible.builtin.postgresql_db:
     name: sonarqube
