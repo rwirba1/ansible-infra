@@ -84,12 +84,12 @@
   ansible.builtin.apt:
     name: python3-psycopg2
     state: present
-    
-- name: Configure PostgreSQL database
-  ansible.builtin.postgresql_db:
-    name: sonarqube
-    owner: sonar
-    state: present
+
+#- name: Configure PostgreSQL database
+#  ansible.builtin.postgresql_db:
+#    name: sonarqube
+#    owner: sonar
+#    state: present
 
 - name: Restart PostgreSQL service
   ansible.builtin.service:
