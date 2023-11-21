@@ -1,53 +1,48 @@
 - name: Install Java 1.8.0 and wget
-  ansible.builtin.yum:
+  yum:
     name:
       - java-1.8.0-openjdk.x86_64
       - wget
     state: present
 
-- name: Create Nexus directories
-  ansible.builtin.file:
-    path: "{{ item }}"
+- name: Create Nexus installation directory
+  file:
+    path: "{{ nexus_install_dir }}"
     state: directory
     mode: '0755'
-  loop:
-    - "{{ nexus_install_dir }}"
-    - "{{ nexus_data_dir }}"
+
+- name: Create temporary directory for Nexus download
+  file:
+    path: "/tmp/nexus"
+    state: directory
+    mode: '0755'
 
 - name: Download Nexus
-  ansible.builtin.get_url:
+  get_url:
     url: "https://download.sonatype.com/nexus/3/nexus-{{ nexus_version }}-unix.tar.gz"
-    dest: "/tmp/nexus.tar.gz"
+    dest: "/tmp/nexus/nexus.tar.gz"
     timeout: 60
   register: download
 
 - name: Extract Nexus
-  ansible.builtin.unarchive:
-    src: "/tmp/nexus.tar.gz"
+  unarchive:
+    src: "/tmp/nexus/nexus.tar.gz"
     dest: "{{ nexus_install_dir }}"
     remote_src: yes
   when: download is changed
 
-- name: Find Nexus directory name
-  ansible.builtin.command: ls "{{ nexus_install_dir }}"
-  register: nexus_dir_name
-  changed_when: false
-
 - name: Add Nexus user
-  ansible.builtin.user:
+  user:
     name: "{{ nexus_user }}"
     system: yes
-    home: "{{ nexus_data_dir }}"
+    createhome: no
 
-- name: Change ownership of Nexus directories
-  ansible.builtin.file:
-    path: "{{ item }}"
+- name: Change ownership of Nexus installation directory
+  file:
+    path: "{{ nexus_install_dir }}"
     owner: "{{ nexus_user }}"
     group: "{{ nexus_user }}"
     recurse: yes
-  loop:
-    - "{{ nexus_install_dir }}"
-    - "{{ nexus_data_dir }}"
 
 - name: Create Nexus service file
   ansible.builtin.template:
