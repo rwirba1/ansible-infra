@@ -3,11 +3,11 @@
   hosts: jenkins
   become: yes
 
-  roles:
-    - jenkins_install
-- name: Ansible Provisioning Ubuntu
-  hosts: sonar
-  become: yes
+#  roles:
+#    - jenkins_install
+#- name: Ansible Provisioning Ubuntu
+#  hosts: sonar
+#  become: yes
 
   roles:
     - sonarqube_install 
