@@ -50,9 +50,18 @@
     dest: /etc/systemd/system/nexus.service
     mode: '0644'
 
+- name: Debug Nexus directory path
+  ansible.builtin.debug:
+    msg: "{{ nexus_install_dir }}/{{ nexus_dir_name.stdout }}"
+
+- name: Find Nexus directory name
+  ansible.builtin.shell: ls "{{ nexus_install_dir }}" | grep 'nexus-' | head -n 1
+  register: nexus_dir_name
+  changed_when: false
+
 - name: Set run_as_user in nexus.rc
   ansible.builtin.lineinfile:
-    path: "{{ nexus_install_dir }}/{{ nexus_dir_name.stdout }}/bin/nexus.rc"
+    path: "{{ nexus_install_dir }}/{{ nexus_dir_name.stdout | trim }}/bin/nexus.rc"
     line: 'run_as_user="{{ nexus_user }}"'
 
 - name: Reload systemd
