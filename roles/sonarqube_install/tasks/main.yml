@@ -78,10 +78,10 @@
 
 - name: Create PostgreSQL user 'sonar'
   postgresql_user:
-  become: true
-  become_user: postgres
     name: sonar
     state: present
+  become: true
+  become_user: postgres    
 
 - name: Set password for PostgreSQL user 'sonar'
   postgresql_user:
