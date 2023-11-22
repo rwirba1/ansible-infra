@@ -1,18 +1,18 @@
 ---
-#- name: Ansible Provisioning Ubuntu
-#  hosts: jenkins
-#  become: yes
+- name: Jenkins Provisioning Ubuntu
+  hosts: jenkins
+  become: yes
+  roles:
+    - jenkins_install
 
-#  roles:
-#    - jenkins_install
-- name: Ansible Provisioning Ubuntu
+- name: Sonarqube Provisioning Ubuntu
   hosts: sonar
   become: yes
 
   roles:
     - sonarqube_install 
 
-- name: Ansible Provisioning Ubuntu
+- name: Nexus Provisioning Ubuntu
   hosts: nexus
   become: yes
 
