@@ -96,6 +96,8 @@
     name: sonarqube
     owner: sonar
     state: present
+  become: true
+  become_user: postgres     
 
 - name: Grant all privileges on 'sonarqube' database to user 'sonar'
   postgresql_privs:
