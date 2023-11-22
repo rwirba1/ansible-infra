@@ -113,6 +113,11 @@
     name: postgresql
     state: restarted
 
+- name: Install pnet-tool
+  ansible.builtin.apt:
+    name: net-tools
+    state: present
+
 - name: Check if PostgreSQL is listening on network ports
   command: netstat -tulpena | grep postgres
   register: netstat_output
