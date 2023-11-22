@@ -105,6 +105,8 @@
     role: sonar
     objs: ALL_IN_SCHEMA
     privs: ALL
+  become: true
+  become_user: postgres    
 
 - name: Restart PostgreSQL service
   service:
