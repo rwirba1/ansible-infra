@@ -88,6 +88,8 @@
     name: sonar
     password: 'admin123'
     encrypted: yes
+  become: true
+  become_user: postgres     
 
 - name: Create 'sonarqube' database
   postgresql_db:
